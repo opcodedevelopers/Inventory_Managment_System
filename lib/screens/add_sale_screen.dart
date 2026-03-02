@@ -24,12 +24,12 @@ class _AddSaleScreenState extends State<AddSaleScreen> {
   final TextEditingController _customerAddressController =
       TextEditingController();
   final TextEditingController _productSearchController =
-      TextEditingController(); // ✅ Add search controller
+      TextEditingController();
 
   // Variables
   Product? _selectedProduct;
   List<Product> _products = [];
-  List<Product> _filteredProducts = []; // ✅ For search results
+  List<Product> _filteredProducts = [];
   bool _isLoading = false;
   double _unitPrice = 0;
   double _buyingPrice = 0;
@@ -52,7 +52,7 @@ class _AddSaleScreenState extends State<AddSaleScreen> {
           .toList();
       setState(() {
         _products = availableProducts;
-        _filteredProducts = availableProducts; // ✅ Initialize filtered list
+        _filteredProducts = availableProducts;
         if (availableProducts.isNotEmpty) {
           _selectedProduct = availableProducts.first;
           _unitPrice = availableProducts.first.sellingPrice;
@@ -157,7 +157,7 @@ class _AddSaleScreenState extends State<AddSaleScreen> {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(
-              '✅ Sale completed successfully! Profit: Rs ${_profit.toStringAsFixed(2)}',
+              'Sale completed successfully! Profit: Rs ${_profit.toStringAsFixed(2)}',
             ),
             backgroundColor: Colors.green,
           ),
@@ -192,7 +192,7 @@ class _AddSaleScreenState extends State<AddSaleScreen> {
           key: _formKey,
           child: Column(
             children: [
-              // ✅ PRODUCT SEARCH SECTION
+              //PRODUCT SEARCH SECTION
               Card(
                 elevation: 3,
                 child: Padding(
@@ -208,8 +208,6 @@ class _AddSaleScreenState extends State<AddSaleScreen> {
                         ),
                       ),
                       SizedBox(height: 10),
-
-                      // Search Bar
                       TextField(
                         controller: _productSearchController,
                         onChanged: _searchProducts,
@@ -230,8 +228,6 @@ class _AddSaleScreenState extends State<AddSaleScreen> {
                       ),
 
                       SizedBox(height: 10),
-
-                      // Product List
                       Container(
                         height: 200,
                         decoration: BoxDecoration(
@@ -516,8 +512,6 @@ class _AddSaleScreenState extends State<AddSaleScreen> {
               ),
 
               SizedBox(height: 16),
-
-              // Customer Details
               Card(
                 elevation: 3,
                 child: Padding(
@@ -572,8 +566,6 @@ class _AddSaleScreenState extends State<AddSaleScreen> {
               ),
 
               SizedBox(height: 24),
-
-              // Complete Sale Button
               SizedBox(
                 width: double.infinity,
                 height: 55,

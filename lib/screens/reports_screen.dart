@@ -730,38 +730,21 @@ class _ReportsScreenState extends State<ReportsScreen> {
                       ),
                     ),
                   ),
-
-                  // Monthly Report
                   _buildMonthlyReportCard(),
-
-                  // Sales Report
                   _buildSalesReportCard(),
-
-                  // Profit Analysis
                   _buildProfitAnalysisCard(),
-
-                  // Product-wise Profit
                   _buildProductProfitCard(),
-
-                  // Stock Report
                   _buildStockReportCard(),
-
-                  // Investment Report
                   _buildInvestmentReportCard(),
-
-                  // Customer Analysis
                   _buildCustomerAnalysisCard(),
 
                   SizedBox(height: 20),
-
-                  // Export Button
                   Padding(
                     padding: EdgeInsets.symmetric(horizontal: 20),
                     child: SizedBox(
                       width: double.infinity,
                       child: ElevatedButton.icon(
                         onPressed: () {
-                          // Export reports functionality
                           _exportReports();
                         },
                         icon: Icon(Icons.download),

@@ -51,34 +51,23 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
   Future<void> _loadDashboardData() async {
     try {
-      // Load all data
       final products = await _productRepo.getAllProducts();
       final lowStock = await _productRepo.getLowStockProducts();
       final totalInv = await _investmentRepo.getTotalInvestment();
       final productInv = await _investmentRepo.getProductInvestmentTotal();
       final otherInv = await _investmentRepo.getOtherInvestmentTotal();
-
-      // ✅ Get ACTUAL PROFITS from sales
       final totalProfitFromSales = await _saleRepo.getTotalProfit();
-
-      // Get sales data
       final totalSalesRevenue = await _saleRepo.getTotalSales();
-
-      // Current month data
       final now = DateTime.now();
       final monthlySales = await _saleRepo.getMonthlyTotalSales(
         now.year,
         now.month,
       );
-
-      // Get monthly investment
       final monthlyInvest = await _investmentRepo.getMonthlyInvestment(
         now.year,
         now.month,
       );
       final monthlyInvestment = monthlyInvest['total'] ?? 0;
-
-      // ✅ Calculate monthly profit from sales
       final monthlySalesList = await _saleRepo.getMonthlySales(
         now.year,
         now.month,
@@ -96,22 +85,22 @@ class _DashboardScreenState extends State<DashboardScreen> {
         _otherInvestment = otherInv;
         _totalSales = totalSalesRevenue;
         _monthlySales = monthlySales;
-        _monthlyProfit = monthlyProfitFromSales; // ✅ Actual monthly profit
-        _totalProfit = totalProfitFromSales; // ✅ Actual total profit
+        _monthlyProfit = monthlyProfitFromSales;
+        _totalProfit = totalProfitFromSales;
       });
 
-      print("📊 Dashboard Data Loaded:");
-      print("   Total Products: $_totalProducts");
-      print("   Low Stock: $_lowStockCount");
-      print("   Total Investment: $_totalInvestment");
-      print("   Product Investment: $_productInvestment");
-      print("   Other Investment: $_otherInvestment");
-      print("   Total Sales Revenue: $_totalSales");
-      print("   Monthly Sales Revenue: $_monthlySales");
-      print("   Monthly Profit: $_monthlyProfit");
-      print("   Total Profit: $_totalProfit");
+      print("Dashboard Data Loaded:");
+      print("Total Products: $_totalProducts");
+      print("Low Stock: $_lowStockCount");
+      print("Total Investment: $_totalInvestment");
+      print("Product Investment: $_productInvestment");
+      print("Other Investment: $_otherInvestment");
+      print("Total Sales Revenue: $_totalSales");
+      print("Monthly Sales Revenue: $_monthlySales");
+      print("Monthly Profit: $_monthlyProfit");
+      print("Total Profit: $_totalProfit");
     } catch (e) {
-      print("❌ Error loading dashboard: $e");
+      print("Error loading dashboard: $e");
     }
   }
 
@@ -138,11 +127,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
     setState(() {
       _selectedIndex = index;
     });
-
-    // Navigate to different screens
     switch (index) {
       case 0:
-        // Already on dashboard
         break;
       case 1:
         Navigator.pushNamed(context, '/products');
@@ -157,8 +143,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
         Navigator.pushNamed(context, '/reports');
         break;
     }
-
-    // Reset index to 0 after navigation (optional)
     Future.delayed(Duration(milliseconds: 100), () {
       if (mounted) {
         setState(() {
@@ -268,6 +252,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 _buildTipItem('Update inventory regularly'),
                 _buildTipItem('Set reorder points for fast-moving items'),
                 _buildTipItem('Analyze customer buying behavior'),
+                _buildTipItem("Make The Goals On The Daily Basics"),
               ],
             ),
           ),
@@ -476,8 +461,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
               ),
 
               SizedBox(height: 20),
-
-              // Daily Communication Tips
               Card(
                 elevation: 2,
                 shape: RoundedRectangleBorder(
@@ -539,8 +522,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 ),
               ),
               SizedBox(height: 12),
-
-              // First Row
               Row(
                 children: [
                   Expanded(
@@ -564,8 +545,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
               ),
 
               SizedBox(height: 12),
-
-              // Second Row
               Row(
                 children: [
                   Expanded(
@@ -589,8 +568,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
               ),
 
               SizedBox(height: 20),
-
-              // Investment Breakdown
               Text(
                 'Investment Breakdown',
                 style: TextStyle(
@@ -628,8 +605,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
                           style: TextStyle(fontWeight: FontWeight.bold),
                         ),
                       ),
-
-                      // Other Investment
                       ListTile(
                         contentPadding: EdgeInsets.zero,
                         leading: CircleAvatar(
@@ -759,8 +734,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       ),
 
                       SizedBox(height: 12),
-
-                      // Profit Indicator
                       Container(
                         height: 6,
                         decoration: BoxDecoration(
@@ -792,7 +765,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
               // Quick Actions - ONLY ONE SECTION
               Text(
-                '🚀 Quick Actions',
+                '✏️ Quick Actions',
                 style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
@@ -867,8 +840,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
               ),
 
               SizedBox(height: 20),
-
-              // Recent Activity (Placeholder)
               Card(
                 elevation: 3,
                 shape: RoundedRectangleBorder(
@@ -902,7 +873,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
                         ],
                       ),
                       SizedBox(height: 12),
-                      // Placeholder for recent activity
                       ListTile(
                         contentPadding: EdgeInsets.zero,
                         leading: CircleAvatar(
@@ -953,8 +923,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
           ),
         ),
       ),
-
-      // Bottom Navigation Bar
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _selectedIndex,
         onTap: _onItemTapped,
@@ -996,8 +964,6 @@ class _DashboardScreenState extends State<DashboardScreen> {
           ),
         ],
       ),
-
-      // Floating Action Button
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           showModalBottomSheet(

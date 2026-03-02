@@ -23,19 +23,13 @@ class _LowStocksScreenState extends State<LowStocksScreen> {
     setState(() => _isLoading = true);
     try {
       final allProducts = await _productRepo.getAllProducts();
-
-      // Filter low stock products (quantity < min stock level but > 0)
       final lowStock = allProducts.where((product) {
         return product.currentQuantity < product.minStockLevel &&
             product.currentQuantity > 0;
       }).toList();
-
-      // Filter out of stock products (quantity = 0)
       final outOfStock = allProducts.where((product) {
         return product.currentQuantity == 0;
       }).toList();
-
-      // Sort by quantity (lowest first)
       lowStock.sort((a, b) => a.currentQuantity.compareTo(b.currentQuantity));
       outOfStock.sort((a, b) => a.name.compareTo(b.name));
 

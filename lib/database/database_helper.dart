@@ -22,41 +22,36 @@ class DatabaseHelper {
   }
 
   Future<Database> _initDatabase() async {
-    // Use databaseFactory instead of getDatabasesPath()
     final dbPath = await databaseFactory.getDatabasesPath();
     final path = join(dbPath, 'inventory.db');
 
     return await databaseFactory.openDatabase(
       path,
       options: OpenDatabaseOptions(
-        version: 2, // ✅ Increment version to 2
+        version: 2,
         onCreate: _createTables,
-        onUpgrade: _upgradeDatabase, // ✅ Add onUpgrade callback
+        onUpgrade: _upgradeDatabase,
       ),
     );
   }
 
-  // ✅ ADD THIS UPGRADE METHOD
   Future<void> _upgradeDatabase(
     Database db,
     int oldVersion,
     int newVersion,
   ) async {
-    print("🔄 Upgrading database from version $oldVersion to $newVersion");
+    print("Upgrading database from version $oldVersion to $newVersion");
 
     if (oldVersion < 2) {
       try {
-        // Add new columns to sales table
         await db.execute(
           'ALTER TABLE sales ADD COLUMN buying_price REAL DEFAULT 0',
         );
         await db.execute('ALTER TABLE sales ADD COLUMN profit REAL DEFAULT 0');
         await db.execute('ALTER TABLE sales ADD COLUMN customer_address TEXT');
         print(
-          "✅ Added buying_price, profit, customer_address columns to sales table",
+          "Added buying_price, profit, customer_address columns to sales table",
         );
-
-        // Add new columns to products table if needed
         try {
           await db.execute(
             'ALTER TABLE products ADD COLUMN min_stock_level INTEGER DEFAULT 5',
@@ -65,22 +60,22 @@ class DatabaseHelper {
             'ALTER TABLE products ADD COLUMN max_stock_level INTEGER DEFAULT 100',
           );
           print(
-            "✅ Added min_stock_level and max_stock_level columns to products table",
+            "Added min_stock_level and max_stock_level columns to products table",
           );
         } catch (e) {
-          print("⚠️ Columns may already exist in products table: $e");
+          print("Columns may already exist in products table: $e");
         }
       } catch (e) {
-        print("❌ Error during database upgrade: $e");
+        print("Error during database upgrade: $e");
         // If alter fails, create new table and copy data
         await _recreateSalesTable(db);
       }
     }
   }
 
-  // ✅ ADD THIS METHOD FOR COMPLETE TABLE RECREATION
+  // For TABLE RECREATION
   Future<void> _recreateSalesTable(Database db) async {
-    print("🔄 Recreating sales table with new structure...");
+    print("Recreating sales table with new structure...");
 
     // Create temporary table with new structure
     await db.execute('''
@@ -119,7 +114,7 @@ class DatabaseHelper {
     // Rename new table to sales
     await db.execute('ALTER TABLE sales_new RENAME TO sales');
 
-    print("✅ Sales table recreated successfully with new columns");
+    print("Sales table recreated successfully with new columns");
   }
 
   Future<void> _createTables(Database db, int version) async {
@@ -188,6 +183,6 @@ class DatabaseHelper {
       )
     ''');
 
-    print("✅ All tables created successfully (Version: $version)");
+    print("All tables created successfully (Version: $version)");
   }
 }

@@ -67,7 +67,7 @@ class _AddInvestmentScreenState extends State<AddInvestmentScreen> {
         await _investmentRepo.addInvestment(investment);
 
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('✅ Investment added successfully')),
+          SnackBar(content: Text('Investment added successfully')),
         );
 
         Navigator.pop(context);

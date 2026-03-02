@@ -4,13 +4,13 @@ class Sale {
   String productName;
   int quantity;
   double unitPrice;
-  double buyingPrice; // ✅ Add buying price
+  double buyingPrice;
   double totalAmount;
-  double profit; // ✅ Add profit field
+  double profit;
   DateTime saleDate;
   String? customerName;
   String? customerPhone;
-  String? customerAddress; // ✅ Add customer address
+  String? customerAddress;
 
   Sale({
     this.id,
@@ -18,13 +18,13 @@ class Sale {
     required this.productName,
     required this.quantity,
     required this.unitPrice,
-    required this.buyingPrice, // ✅ Add this
+    required this.buyingPrice,
     required this.totalAmount,
-    required this.profit, // ✅ Add this
+    required this.profit,
     DateTime? saleDate,
     this.customerName,
     this.customerPhone,
-    this.customerAddress, // ✅ Add this
+    this.customerAddress,
   }) : saleDate = saleDate ?? DateTime.now();
 
   Map<String, dynamic> toMap() {
@@ -34,13 +34,13 @@ class Sale {
       'product_name': productName,
       'quantity': quantity,
       'unit_price': unitPrice,
-      'buying_price': buyingPrice, // ✅ Add this
+      'buying_price': buyingPrice,
       'total_amount': totalAmount,
-      'profit': profit, // ✅ Add this
+      'profit': profit,
       'sale_date': saleDate.toIso8601String(),
       'customer_name': customerName,
       'customer_phone': customerPhone,
-      'customer_address': customerAddress, // ✅ Add this
+      'customer_address': customerAddress,
     };
   }
 
@@ -51,17 +51,15 @@ class Sale {
       productName: map['product_name'],
       quantity: map['quantity'],
       unitPrice: map['unit_price'],
-      buyingPrice: map['buying_price'] ?? 0, // ✅ Add this
+      buyingPrice: map['buying_price'] ?? 0,
       totalAmount: map['total_amount'],
-      profit: map['profit'] ?? 0, // ✅ Add this
+      profit: map['profit'] ?? 0,
       saleDate: DateTime.parse(map['sale_date']),
       customerName: map['customer_name'],
       customerPhone: map['customer_phone'],
-      customerAddress: map['customer_address'], // ✅ Add this
+      customerAddress: map['customer_address'],
     );
   }
-
-  // Calculate profit percentage
   double get profitPercentage {
     if (buyingPrice == 0) return 0;
     return ((profit / (buyingPrice * quantity)) * 100);

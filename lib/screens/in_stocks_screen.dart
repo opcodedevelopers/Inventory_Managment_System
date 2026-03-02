@@ -25,24 +25,16 @@ class _InStocksScreenState extends State<InStocksScreen> {
     setState(() => _isLoading = true);
     try {
       final allProducts = await _productRepo.getAllProducts();
-
-      // Filter products with stock > 0
       final inStock = allProducts.where((product) {
         return product.currentQuantity > 0;
       }).toList();
-
-      // Normal stock (within min-max range)
       final normalStock = inStock.where((product) {
         return product.currentQuantity >= product.minStockLevel &&
             product.currentQuantity <= product.maxStockLevel;
       }).toList();
-
-      // Over stock (above max level)
       final overStock = inStock.where((product) {
         return product.currentQuantity > product.maxStockLevel;
       }).toList();
-
-      // Sort by quantity (highest first)
       normalStock.sort(
         (a, b) => b.currentQuantity.compareTo(a.currentQuantity),
       );

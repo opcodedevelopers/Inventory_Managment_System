@@ -57,7 +57,7 @@ class _AddProductScreenState extends State<AddProductScreen> {
 
         ScaffoldMessenger.of(
           context,
-        ).showSnackBar(SnackBar(content: Text('✅ Product added successfully')));
+        ).showSnackBar(SnackBar(content: Text('Product added successfully')));
 
         Navigator.pop(context);
       } catch (e) {

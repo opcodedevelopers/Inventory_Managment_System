@@ -45,8 +45,6 @@ class _SalesScreenState extends State<SalesScreen> {
         totalProfit += sale.profit;
         totalItems += sale.quantity;
       }
-
-      // Filter for today
       final today = DateTime.now();
       final todayStr = today.toIso8601String().split('T')[0];
       final todaySales = sales.where((sale) {
@@ -69,7 +67,6 @@ class _SalesScreenState extends State<SalesScreen> {
     }
   }
 
-  // Search with product dropdown
   Widget _buildSearchBar() {
     List<Product> filteredProducts = _searchQuery.isEmpty
         ? []
@@ -84,7 +81,6 @@ class _SalesScreenState extends State<SalesScreen> {
 
     return Column(
       children: [
-        // Search Text Field
         Padding(
           padding: EdgeInsets.all(10),
           child: TextField(
@@ -116,8 +112,6 @@ class _SalesScreenState extends State<SalesScreen> {
             ),
           ),
         ),
-
-        // Product Suggestions Dropdown
         if (_searchQuery.isNotEmpty && filteredProducts.isNotEmpty)
           Container(
             margin: EdgeInsets.symmetric(horizontal: 10),
@@ -188,8 +182,6 @@ class _SalesScreenState extends State<SalesScreen> {
   void _searchSales(String query) {
     setState(() {
       _searchQuery = query;
-
-      // First apply date filter
       List<Sale> tempSales = _sales;
 
       if (_selectedFilter == 'today') {
@@ -210,8 +202,6 @@ class _SalesScreenState extends State<SalesScreen> {
           return sale.saleDate.isAfter(monthAgo);
         }).toList();
       }
-
-      // Then apply search filter
       if (query.isEmpty) {
         _filteredSales = tempSales;
       } else {
@@ -249,8 +239,6 @@ class _SalesScreenState extends State<SalesScreen> {
       } else {
         _filteredSales = _sales;
       }
-
-      // Apply search filter if search query exists
       if (_searchQuery.isNotEmpty) {
         _filteredSales = _filteredSales.where((sale) {
           return sale.productName.toLowerCase().contains(
@@ -448,10 +436,7 @@ class _SalesScreenState extends State<SalesScreen> {
       ),
       body: Column(
         children: [
-          // Search Bar with Product Suggestions
           _buildSearchBar(),
-
-          // Summary Card
           Card(
             margin: EdgeInsets.all(10),
             child: Padding(
@@ -522,8 +507,6 @@ class _SalesScreenState extends State<SalesScreen> {
               ),
             ),
           ),
-
-          // Filter Chips
           SingleChildScrollView(
             scrollDirection: Axis.horizontal,
             padding: EdgeInsets.symmetric(horizontal: 10),
@@ -555,10 +538,7 @@ class _SalesScreenState extends State<SalesScreen> {
               ],
             ),
           ),
-
           SizedBox(height: 10),
-
-          // Sales List
           Expanded(
             child: _isLoading
                 ? Center(child: CircularProgressIndicator())

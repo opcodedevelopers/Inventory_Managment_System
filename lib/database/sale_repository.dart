@@ -47,7 +47,7 @@ class SaleRepository {
     );
 
     double profit = result.first['total']?.toDouble() ?? 0.0;
-    print("💰 Total Profit from Database: Rs $profit");
+    print("Total Profit from Database: Rs $profit");
     return profit;
   }
 

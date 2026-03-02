@@ -196,7 +196,6 @@ class _ProductsScreenState extends State<ProductsScreen> {
     );
   }
 
-  // ✅ DELETE PRODUCT FUNCTION
   Future<void> _deleteProduct(Product product) async {
     bool confirm = await showDialog(
       context: context,
@@ -218,7 +217,6 @@ class _ProductsScreenState extends State<ProductsScreen> {
         );
       },
     );
-
     if (confirm == true) {
       await _productRepo.deleteProduct(product.id!);
       _loadProducts(); // Refresh list
@@ -474,10 +472,7 @@ class _ProductsScreenState extends State<ProductsScreen> {
               ],
             ),
           ),
-
           SizedBox(height: 10),
-
-          // Products List
           Expanded(
             child: _isLoading
                 ? Center(child: CircularProgressIndicator())
